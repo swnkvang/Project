@@ -1,0 +1,572 @@
+# -*- coding: utf-8 -*-
+import datetime
+import time
+import threading
+import psutil
+import mysql.connector
+import json
+import requests
+import paramiko
+# box1_w = 10
+# box1_l = 15
+# box1_h = 10
+#
+# box2_w = 2
+# box2_l = 10
+# box2_h = 25
+#
+# sqbox1 = box1_w*box1_l*box1_h
+# sqbox2 = box2_w*box2_l*box2_h
+#
+# print "sq 1/sq2",sqbox1/sqbox2
+
+#====================================================
+
+# def VolCal(h,r):
+#     vol = 1.0/3.0*3.141*r**r*h
+#     return vol
+#
+#
+#
+# h=input("High : ");
+# r=input("Raduis : ");
+#
+# ans =VolCal(h,r)
+# print ans
+
+#===================================================
+
+# Point = input("Point : ")
+#
+# if(Point>90):
+#     print"Pass Good"
+# elif(Point>60):
+#     print"Pass"
+# elif(Point<60):
+#     print"Not Pass"
+
+#=================================================
+
+
+# def fMul(m):
+#     for x in range(12):
+#         ans = m*(x+1)
+#         print "%d x %d = %d" %(m,x+1,ans)
+#
+#
+# m = input("แม่สูตรคูณที่ต้องการ : ")
+# fMul(m)
+
+#==================================================
+
+# for x in range(2):
+#     num = input("เลขที่ต้องการ ")
+#     if(num%2==0):
+#         print "%d เป็นเลขคู่ " %num
+#     elif(num%2!=0):
+#         print "%d เป็นเลขคี่ " %num
+
+#==================================================
+
+# hwP=input("คะแนนเก็บ : ")
+# testP=input("คะแนนสอบ : ")
+#
+# totalP=hwP+testP
+#
+# if(totalP>=80):
+#     grade = "A"
+#
+# elif(totalP>=70&totalP<80):
+#     grade = "B"
+#
+# elif(totalP>=60&totalP<70):
+#     grade = "C"
+#
+# elif(totalP>=50&totalP<60):
+#     grade = "D"
+#
+# elif(totalP<50):
+#     grade = "E"
+#
+# print grade
+
+#===========================================
+
+# list_fruit = ["apple","banana","cherry","mango"]
+#
+# print list_fruit[2]
+#
+# list_fruit.append("orange")
+# list_fruit.append("coconut")
+# print list_fruit
+# list_fruit[0]="football"
+# print list_fruit
+# list_fruit.remove("banana")
+# print list_fruit
+#
+# print len(list_fruit)
+
+#===============================================
+
+# car = {
+# "brand": "Ford",
+# "model": "Mustang",
+# "year": 1964
+# }
+#
+# car["color"] = "red"
+# print car
+#
+# print car["model"]
+# print len(car)
+
+#=================================================
+
+# list_name = ["Alice","Bob","Oscar","Alice","Alice","Bob","Oscar","Bob"]
+# list_money = [100,200,150,50,80,120,30,180]
+# my_dict = {}
+# list_total = []
+# Lname=len(list_name)
+# for x in range(Lname):
+#     if(list_name[x] not in list_total ):
+#         list_total.append(list_name[x])
+#         my_dict[list_name[x]] = list_money[x]
+#     else:
+#         my_dict[list_name[x]] += list_money[x]
+#
+# print my_dict
+
+#==========================================
+
+# list_name = ["Alice","Bob","Oscar","Alice","Alice","Bob","Oscar","Bob"]
+# list_money = [100,200,150,50,80,120,30,180]
+# my_dict = {}
+# Lname=len(list_name)
+# for x in range(len(list_name)):
+#     if(list_name[x] not in my_dict.keys()):
+#         my_dict[list_name[x]] = list_money[x]
+#     else:
+#         my_dict[list_name[x]] += list_money[x]
+#
+# print my_dict
+
+#==========================================
+
+# data = [
+#         {"output1": ["MS_AOTBTTEXCH01_DB7 t 12 12",
+#         "HP_D2_SATA_TRUE-CJ_01 t 2 2",
+#         "SPARC_TOPGUN_OS t 64 64"]
+#     },
+#          {"output2":["MS_IDC1_MS_ACI3_PRD01_SAS01 t 28 28",
+#          "BTT_EX04_Prod_HMDB10GB01_AC t 15 15",
+#          "HP_D1_SAS_SERISYS_2 t 68 68"]
+#      }
+#
+#
+#
+#
+#  ]
+#
+# #print len(data)
+# for i in range(len(data)):
+#     for j in data[i]:
+#         for k in range(len(data[i][j])):
+#             splTar = data[i][j][k].split()
+#             In_splTar = int(splTar[2])
+#             if(In_splTar>20):
+#                 status = "critical"
+#                 print splTar[0] + " : " + status + "(" + splTar[2] + ")"
+#             elif (In_splTar<20):
+#                 status = "normal"
+#                 print splTar[0] + " : " + status + "(" + splTar[2] + ")"
+
+#=================================================
+#
+# for n in range(len(data)):
+#     for x in range(len(3):
+#         if(n==0):
+#             target1 = data[0]["output1"][x]
+#             splTar1 = target1.split()
+#             In_splTar1 = int(splTar1[2])
+#             if(In_splTar1>20):
+#                 status = "critical"
+#                 print splTar1[0]+" : " +status + "(" +splTar1[2] + ")"
+#             elif(In_splTar1<20):
+#                 status = "normal"
+#                 print splTar1[0]+" : " +status + "(" +splTar1[2] + ")"
+#
+#
+#         elif(n==1):
+#             target2 = data[0]["output1"][x]
+#             splTar2 = target2.split()
+#             In_splTar2 = int(splTar2[2])
+#             if (In_splTar2 > 20):
+#                 status = "critical"
+#                 print splTar2[0] + " : " + status + "(" + splTar2[2] + ")"
+#             elif (In_splTar2 < 20):
+#                 status = "normal"
+#                 print splTar2[0] + " : " + status + "(" + splTar1[2] + ")"
+
+
+# Input = "zvzry nzw day is anothzr chancz to changz your lifz."
+# print Input.replace('z','e').capitalize()
+
+#======================================================
+
+# Input ="""Interface IP-Address OK? Method Status Protocol
+# GigabitEthernet1 192.168.1.3 YES manual down up
+# GigabitEthernet2 172.17.111.3 YES manual up up
+# GigabitEthernet3 192.168.101.3 YES manual up up"""
+#
+# splInput = Input.splitlines()
+# ToIn=int(len(splInput))
+#
+# for i in range(ToIn):
+#     spl=splInput[i].split()[4]
+#
+#     if(spl == "down"):
+#         spl1 = splInput[i].split()[0]
+#         print spl1+" : "+spl
+
+#==============================================================
+
+# day=input("Day : ")
+# month=input("Month : ")
+# year=input("Year : ")
+# now = datetime.datetime.now()
+# new_date = datetime.datetime(year,month,day)
+#
+# print now-new_date
+
+#==============================================================
+
+# now = datetime.datetime.now()
+# for x in range(7):
+#     new_date = datetime.timedelta(x)
+#
+#
+#     print now-new_date
+
+#===============================================================
+# ch = True
+# while ch:
+#     try:
+#         m = input("มวล : ")
+#         v = input("ปริมาตร : ")
+#         print m/v
+#         print ("ความหนาแน่นเสร็จสิ้น")
+#         ch = False
+#     except ZeroDivisionError:
+#         print ("ข้อผิดพลาดจากการหารด้วย 0")
+#         print "ชอบคุณค่ะ"
+#
+#     except TypeError:
+#         print ("ใช้้ชนิดของตัวแปรผิด")
+#         print "ชอบคุณค่ะ"
+
+#==========================================================
+
+#Sequence
+# def calSQ(num,delay):
+#     time.sleep(delay)
+#     sumSQ = num*num
+#     print "SQ : ",sumSQ
+#
+# def calVol(num,delay):
+#     time.sleep(delay)
+#     sumVol = num*num*num
+#     print "Vol : ",sumVol
+#
+# start_time = time.time()
+#
+# num = input("Number : ")
+#
+#
+# delay1 = 2
+# delay2 = 3
+# calSQ(num,delay1)
+# calVol(num,delay2)
+# print "Elapsed time : ",time.time()-start_time
+
+#==============================================================
+
+# def calSQ(num,delay):
+#     time.sleep(delay)
+#     sumSQ = num*num
+#     print "SQ : ",sumSQ
+#
+# def calVol(num,delay):
+#     time.sleep(delay)
+#     sumVol = num*num*num
+#     print "Vol : ",sumVol
+#
+# start_time = time.time()
+# num = input("Number : ")
+# delay1 = 2
+# delay2 = 3
+#
+# thrade1 = threading.Thread(target=calSQ,args=(num,delay1))
+# thrade2 = threading.Thread(target=calVol,args=(num,delay2))
+#
+# thrade1.start()
+# thrade2.start()
+#
+# thrade1.join()
+# thrade2.join()
+#
+# print "Elapsed time : ", time.time() - start_time
+
+#===============================================================
+# my_dict = {}
+# list_user = []
+# from flask import Flask,request
+# my_app = Flask(__name__)
+#
+# @my_app.route("/Create",methods=["POST"])
+# def myFirstApi():
+#     data = request.json
+#     # print data["User"]
+#     my_dict["user"] = data["User"]
+#     my_dict["pass"] = data["Pass"]
+#     print my_dict
+#     print my_dict.values()[0]
+#     return "Create Success"
+#
+#
+#
+# @my_app.route("/login",methods=["POST"])
+# def login():
+#     data = request.json
+#     print data["User"]
+#     if((data["User"] == my_dict.values()[0]) and data["Pass"] == my_dict.values()[1]):
+#         return "Login Success"
+#     else:
+#         return "Fail"
+#
+# @my_app.route("/Update",methods=["PUT"])
+# def update():
+#     data = request.json
+#     print data["Pass"]
+#     print my_dict["pass"]
+#     my_dict["pass"] =  data["Pass"]
+#     print my_dict
+#     return "Update Success"
+#
+# @my_app.route("/Delete",methods=["DELETE"])
+# def delete():
+#     data = request.json
+#     print data
+#     if(data["User"] == my_dict["user"]):
+#         my_dict["user"] = ''
+#         my_dict["pass"] = ''
+#     print my_dict
+#     return "Delete Success"
+# my_app.run(host="0.0.0.0")
+
+#=======================================================================
+
+# from flask import Flask
+# # from flask_basicauth import BasicAuth
+# # app = Flask(__name__)
+# # app.config['BASIC_AUTH_USERNAME'] = 'sdi'
+# # app.config['BASIC_AUTH_PASSWORD'] = 'admin'
+# # secure_my_api = BasicAuth(app)
+# # @app.route('/')
+# # @secure_my_api.required
+# # def securedByBasicAuth():
+# #     return "Hello, You’re passed the authentication."
+# # app.run(host="0.0.0.0")
+
+#=========================================================================
+
+# c=psutil.cpu_percent(interval=1)
+# m=psutil.virtual_memory()
+# d = psutil.disk_usage('/')
+#
+#
+# my_dict = {}
+#
+# my_dict["cpu"] = c
+# my_dict["mem"] = m
+# my_dict["disk"] = d
+#
+#
+# # print c
+# # print m
+# # print d
+# # print my_dict.keys()
+# # print my_dict["cpu"]
+# # # print my_dict
+# # print type(my_dict["cpu"])
+# # cpuToS=str(my_dict["cpu"])
+# # print type(cpuToS)
+# # memToS=str(my_dict["mem"])
+# # print memToS
+# arr = []
+# from flask import Flask,request
+# my_app = Flask(__name__)
+# @my_app.route("/g",methods=["GET"])
+# def g():
+#     data = request.json
+#     print data["cpu"]
+#     print data["mem"]
+#     ch = True
+#     if(data["cpu"] == 'y'):
+#         cpuToString = str(my_dict["cpu"])
+#         arr.append(cpuToString)
+#         arrToString = str(arr)
+#     if(data["cpu"] == 'n'):
+#         arr.append("Cpu : Null")
+#         arrToString = str(arr)
+#     if(data["mem"] == 'y'):
+#         memToString = str(my_dict["mem"])
+#         arr.append(memToString)
+#         arrToString = str(arr)
+#     if (data["mem"] == 'n'):
+#         arr.append("Mem : Null")
+#         arrToString = str(arr)
+#     if(data["disk"] == 'y'):
+#         diskToString = str(my_dict["disk"])
+#         arr.append(memToString)
+#         arrToString = str(arr)
+#     if (data["disk"] == 'n'):
+#         arr.append("Disk : Null")
+#         arrToString = str(arr)
+#     return arrToString
+#
+#
+#
+# my_app.run(host="0.0.0.0")
+
+#============================================================
+
+# mydb = mysql.connector.connect(
+#     host='localhost',
+#     port='3306',
+#     database='user',
+#     user='root',
+#     password = '12345678',
+# )
+# mycursor = mydb.cursor(dictionary=True)
+# text_cammand = "select * from user;"
+# mycursor.execute(text_cammand)
+# myresullt = mycursor.fetchall()
+# sql = "insert into user (user_id,username,name,password) values(10,'k','kkk','1234');"
+# mycursor.execute(sql)
+# mydb.commit()
+
+# my_dict = {}
+#
+#
+# def json_response(messages=None, status=None, headers=None):
+#     if headers == None:
+#         headers = dict()
+#     headers.update({"Content-Type": "application/json"})
+#     # contents = json.dumps(messages, default=json_util.default).replace('\'', '"')
+#     contents = json.dumps(messages, indent=4, sort_keys=True, default=str).replace('\'', '"')
+#     if(status == None):
+#         status = 200
+#     resp = Response(response=contents, headers=headers, status=int(status))
+#     return resp
+#
+# def insert(id,username,name,password):
+#     idToint=int(id)
+#     usernameToString=str(username)
+#     nameToString=str(name)
+#     passwordToString=str(password)
+#
+#     mycursor = mydb.cursor(dictionary=True)
+#     sql = "insert into user (user_id,username,name,password) values('{0}','{1}','{2}','{3}');".format(idToint,usernameToString,nameToString,passwordToString)
+#     mycursor.execute(sql)
+#     mydb.commit()
+#     print "insert Success"
+#
+#
+# def update(id,username,name,password,userEdit):
+#     idToint=int(id)
+#     usernameToString=str(username)
+#     nameToString=str(name)
+#     passwordToString=str(password)
+#     userEditToint = int(userEdit)
+#
+#     mycursor = mydb.cursor(dictionary=True)
+#     sql = "update user set user_id = '{0}', username = '{1}', name = '{2}', password = '{3}' where user_id = '{4}';".format(idToint,usernameToString,nameToString,passwordToString,userEdit)
+#     mycursor.execute(sql)
+#     mydb.commit()
+#
+# def delete(user_delete):
+#     user_deleteToInt = int(user_delete)
+#     mycursor = mydb.cursor(dictionary=True)
+#     sql = "delete from user where user_id = '{0}';".format(user_deleteToInt)
+#     mycursor.execute(sql)
+#     mydb.commit()
+#
+#
+# def select():
+#     mycursor = mydb.cursor(dictionary=True)
+#     text_cammand = "select * from user;"
+#     mycursor.execute(text_cammand)
+#     myresullt = mycursor.fetchall()
+#     return myresullt
+
+#
+#
+# from flask import Flask,request,Response
+# my_app = Flask(__name__)
+# @my_app.route("/CreateDB", methods=["GET"])
+# def createDB():
+#     data = request.json
+#     my_dict["user_id"] = data["user_id"]
+#     my_dict["username"] = data["username"]
+#     my_dict["name"] = data["name"]
+#     my_dict["password"] = data["password"]
+#     insert(my_dict["user_id"],my_dict["username"],my_dict["name"],my_dict["password"])
+#     # print my_dict["user_id"]
+#     return "Connect Success"
+#
+# @my_app.route("/UpdateDB", methods=["PUT"])
+# def updateDB():
+#     data = request.json
+#     print data
+#     my_dict["user_id"] = data["user_id"]
+#     my_dict["username"] = data["username"]
+#     my_dict["name"] = data["name"]
+#     my_dict["password"] = data["password"]
+#     my_dict["userEdit"] = data["userEdit"]
+#     update(my_dict["user_id"],my_dict["username"],my_dict["name"],my_dict["password"],my_dict["userEdit"])
+#     return "Update Success"
+#
+# @my_app.route("/DeleteDB", methods=["DELETE"])
+# def DeleteDB():
+#     data = request.json
+#     my_dict["user_Delete"] = data["user_Delete"]
+#     delete(my_dict["user_Delete"])
+#     return "Delete Success"
+#
+# @my_app.route("/GetDB", methods=["GET"])
+# def get():
+#     Vselect =select()
+#     print Vselect
+#     return json_response(Vselect)
+#
+#
+#
+#
+# my_app.run(host="0.0.0.0")
+
+#=======================================================================
+#
+# import requests
+#
+# url = "https://notify-api.line.me/api/notify"
+#
+# payload = "message=hello"
+# headers = {
+#     'Content-Type': "application/x-www-form-urlencoded",
+#     'Authorization': "Bearer XuZuClNnOh3RmvkrzICo8dwlbfOPanNBdjai7TdWyk0",
+#
+#     }
+#
+# response = requests.request("POST", url, data=payload, headers=headers)
+#
+# print(response.text)
